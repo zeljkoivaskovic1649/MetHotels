@@ -5,35 +5,15 @@
  */
 package com.mycompany.methotels.pages;
 
-
+import com.mycompany.methotels.components.GenericEditor;
 import com.mycompany.methotels.entities.Soba;
-import java.util.ArrayList;
-import org.apache.tapestry5.annotations.Property;
-import org.apache.tapestry5.hibernate.annotations.CommitAfter;
-import org.apache.tapestry5.ioc.annotations.Inject;
-import org.hibernate.Session;
+
+
+
 /**
  *
  * @author Zeljko
  */
-public class DodavanjeSobe {
-    @Property
-    private ArrayList<Soba> sobe;
-    @Property
-    private Soba soba;
-    @Inject
-    private Session session;
+public class DodavanjeSobe extends GenericEditor<Soba>{
     
-    void onActivate(){
-        if(sobe == null){
-            sobe = new ArrayList<Soba>();
-        }
-        sobe = (ArrayList<Soba>)session.createCriteria(Soba.class).list();
-    }
-    
-    @CommitAfter
-    Object onSuccess(){
-        session.persist(soba);
-        return this;
-    }
 }

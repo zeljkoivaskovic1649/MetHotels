@@ -31,15 +31,10 @@ import org.apache.tapestry5.ioc.annotations.Inject;
 @Table(name = "soba")
 @NamedQueries({
     @NamedQuery(name = "Soba.findAll", query = "SELECT s FROM Soba s")})
-public class Soba implements Serializable {
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "sobaId")
-    private List<Korisnik> korisnikList;
+public class Soba extends AbstractEntity {
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "soba")
+    private List<Rezervacija> rezervacijaList;
     private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(name = "id")
-    private Integer id;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 10)
@@ -157,13 +152,13 @@ public class Soba implements Serializable {
     public String toString() {
         return imeSobe + " - " + sprat;
     }
-
-    public List<Korisnik> getKorisnikList() {
-        return korisnikList;
+    
+    public List<Rezervacija> getRezervacijaList() {
+        return rezervacijaList;
     }
 
-    public void setKorisnikList(List<Korisnik> korisnikList) {
-        this.korisnikList = korisnikList;
+    public void setRezervacijaList(List<Rezervacija> rezervacijaList) {
+        this.rezervacijaList = rezervacijaList;
     }
     
 }

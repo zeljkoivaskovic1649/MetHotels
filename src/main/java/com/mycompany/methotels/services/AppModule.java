@@ -1,5 +1,7 @@
 package com.mycompany.methotels.services;
 
+import com.mycompany.methotels.data.GenericDao;
+import com.mycompany.methotels.data.GenericDaoImpl;
 import com.mycompany.methotels.data.KorisnikDao;
 import com.mycompany.methotels.data.KorisnikDaoImpl;
 import com.mycompany.methotels.data.SobaDao;
@@ -36,6 +38,7 @@ public class AppModule
         // invoking the constructor.
         binder.bind(SobaDao.class, SobaDaoImpl.class);
         binder.bind(KorisnikDao.class, KorisnikDaoImpl.class);
+        binder.bind(GenericDao.class, GenericDaoImpl.class);
     }
 
     public static void contributeFactoryDefaults(

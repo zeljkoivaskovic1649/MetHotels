@@ -6,7 +6,9 @@
 package com.mycompany.methotels.entities;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -16,6 +18,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -35,13 +38,10 @@ import org.apache.tapestry5.ioc.annotations.Inject;
     @NamedQuery(name = "Korisnik.findByAdresa", query = "SELECT k FROM Korisnik k WHERE k.adresa = :adresa"),
     @NamedQuery(name = "Korisnik.findByTelefon", query = "SELECT k FROM Korisnik k WHERE k.telefon = :telefon"),
     @NamedQuery(name = "Korisnik.findByJmbg", query = "SELECT k FROM Korisnik k WHERE k.jmbg = :jmbg")})
-public class Korisnik implements Serializable {
+public class Korisnik extends AbstractEntity {
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "korisnik")
+    private List<Rezervacija> rezervacijaList;
     private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(name = "id")
-    private Integer id;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 50)
@@ -67,9 +67,6 @@ public class Korisnik implements Serializable {
     @Size(min = 1, max = 50)
     @Column(name = "jmbg")
     private String jmbg;
-    @JoinColumn(name = "soba_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
-    private Soba sobaId;
 
     @Inject
     public Korisnik() {
@@ -136,14 +133,6 @@ public class Korisnik implements Serializable {
         this.jmbg = jmbg;
     }
 
-    public Soba getSobaId() {
-        return sobaId;
-    }
-
-    public void setSobaId(Soba sobaId) {
-        this.sobaId = sobaId;
-    }
-
     @Override
     public int hashCode() {
         int hash = 0;
@@ -167,6 +156,14 @@ public class Korisnik implements Serializable {
     @Override
     public String toString() {
         return ime + " " + prezime;
+    }
+
+    public List<Rezervacija> getRezervacijaList() {
+        return rezervacijaList;
+    }
+
+    public void setRezervacijaList(List<Rezervacija> rezervacijaList) {
+        this.rezervacijaList = rezervacijaList;
     }
     
 }

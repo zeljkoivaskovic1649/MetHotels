@@ -1,5 +1,9 @@
 package com.mycompany.methotels.services;
 
+import com.mycompany.methotels.data.KorisnikDao;
+import com.mycompany.methotels.data.KorisnikDaoImpl;
+import com.mycompany.methotels.data.SobaDao;
+import com.mycompany.methotels.data.SobaDaoImpl;
 import java.io.IOException;
 
 import org.apache.tapestry5.*;
@@ -30,6 +34,8 @@ public class AppModule
         // Use service builder methods (example below) when the implementation
         // is provided inline, or requires more initialization than simply
         // invoking the constructor.
+        binder.bind(SobaDao.class, SobaDaoImpl.class);
+        binder.bind(KorisnikDao.class, KorisnikDaoImpl.class);
     }
 
     public static void contributeFactoryDefaults(

@@ -6,7 +6,9 @@
 package com.mycompany.methotels.entities;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -14,6 +16,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -29,6 +32,8 @@ import org.apache.tapestry5.ioc.annotations.Inject;
 @NamedQueries({
     @NamedQuery(name = "Soba.findAll", query = "SELECT s FROM Soba s")})
 public class Soba implements Serializable {
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "sobaId")
+    private List<Korisnik> korisnikList;
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -150,7 +155,15 @@ public class Soba implements Serializable {
 
     @Override
     public String toString() {
-        return "com.mycompany.it250dz06.entities.Soba[ id=" + id + " ]";
+        return imeSobe + " - " + sprat;
+    }
+
+    public List<Korisnik> getKorisnikList() {
+        return korisnikList;
+    }
+
+    public void setKorisnikList(List<Korisnik> korisnikList) {
+        this.korisnikList = korisnikList;
     }
     
 }

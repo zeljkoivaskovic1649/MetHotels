@@ -10,6 +10,7 @@ import com.mycompany.methotels.entities.Korisnik;
 import java.util.List;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.hibernate.Session;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 
 /**
@@ -31,14 +32,33 @@ public class KorisnikDaoImpl implements KorisnikDao{
     }
 
     @Override
-    public void dodajKorisnika(Korisnik korisnik) {
-        session.persist(korisnik);
-    }
-
-    @Override
     public void obrisiKorisnika(Integer id) {
         Korisnik korisnik = (Korisnik) session.createCriteria(Korisnik.class).add(Restrictions.eq("id", id)).uniqueResult();
         session.delete(korisnik);
     }
     
+    @Override
+    public Korisnik registrujKorisnika(Korisnik korisnik) {
+        return (Korisnik) session.merge(korisnik);
+    }
+
+    @Override
+    public Korisnik loginKorisnika(String username, String password) {
+        try{
+            Korisnik k = (Korisnik) session.createCriteria(Korisnik.class).add(Restrictions.eq("username", username)).
+                    add(Restrictions.eq("password", password)).uniqueResult();
+            if(k != null){
+                return k;
+            }
+            return null;
+        }catch(NullPointerException e){
+            return null;
+        }
+    }
+    
+    @Override
+    public boolean validanEmail(String email) {
+        Long rezultati = (Long)session.createCriteria(Korisnik.class).add(Restrictions.eq("email", email)).setProjection(Projections.rowCount()).uniqueResult();
+        return (rezultati==0) ? false : true;
+    }
 }

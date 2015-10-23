@@ -40,6 +40,10 @@ public class AppModule
         binder.bind(KorisnikDao.class, KorisnikDaoImpl.class);
         binder.bind(GenericDao.class, GenericDaoImpl.class);
     }
+    
+    public void contributeComponentRequestHandler(OrderedConfiguration<ComponentRequestFilter> configuration) {
+        configuration.addInstance("PageProtectionFilter", PageProtectionFilter.class);
+    }
 
     public static void contributeFactoryDefaults(
             MappedConfiguration<String, Object> configuration)

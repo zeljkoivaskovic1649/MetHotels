@@ -1,5 +1,5 @@
 <html t:type="layout" title="Dodavanje Soba"
     xmlns:t="http://tapestry.apache.org/schema/tapestry_5_3.xsd"
       xmlns:p="tapestry:parameter">
-    <t:beaneditform t:id="form" object="korisnik" submitlabel="Login" exclude="id,ime,prezime,email.adresa,rola" />
+    <t:beaneditform t:id="form" object="korisnik" submitlabel="Registruj" exclude="id,rola" />
 </html>

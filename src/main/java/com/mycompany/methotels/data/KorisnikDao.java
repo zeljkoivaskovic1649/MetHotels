@@ -16,6 +16,8 @@ import java.util.List;
 public interface KorisnikDao {
     public List<Korisnik> getListaKorisnika();
     public Korisnik getKorisnikById(Integer id);
-    public void dodajKorisnika(Korisnik korisnik);
     public void obrisiKorisnika(Integer id);
+    public Korisnik registrujKorisnika(Korisnik korisnik);
+    public Korisnik loginKorisnika(String username, String password);;
+    public boolean validanEmail(String email);
 }

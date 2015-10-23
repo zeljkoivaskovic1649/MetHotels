@@ -17,12 +17,14 @@ import org.apache.tapestry5.annotations.Property;
 import org.apache.tapestry5.beaneditor.BeanModel;
 import org.apache.tapestry5.hibernate.annotations.CommitAfter;
 import org.apache.tapestry5.ioc.annotations.Inject;
+import org.apache.tapestry5.json.JSONObject;
 import org.apache.tapestry5.services.BeanModelSource;
 import org.apache.tapestry5.services.PropertyConduitSource;
 
 /**
  *
  * @author Zeljko
+ * @param <T>
  */
 public class GenericEditor<T extends AbstractEntity> {
     @Inject
@@ -79,5 +81,13 @@ public class GenericEditor<T extends AbstractEntity> {
             bean = (T) klasa.newInstance();
         } catch (Exception ex) {}
         return this;
+    }
+    
+    public JSONObject getOptions() {
+        JSONObject json = new JSONObject();
+        json.put("bJQueryUI", "true");
+        json.put("bStateSave", true);
+        json.put("bAutoWidth", true);
+        return json;
     }
 }

@@ -31,8 +31,8 @@ public class SobaDaoImpl implements SobaDao{
     }
 
     @Override
-    public void dodajSobu(Soba soba) {
-        session.persist(soba);
+    public void dodajIliIzmeniSobu(Soba soba) {
+        session.merge(soba);
     }
 
     @Override
@@ -41,4 +41,8 @@ public class SobaDaoImpl implements SobaDao{
         session.delete(soba);
     }
     
+    @Override
+    public List<Soba> getListaSobaPoImenu(String ime) {
+        return session.createCriteria(Soba.class).add(Restrictions.like("imeSobe", ime + "%")).list();
+    }
 }

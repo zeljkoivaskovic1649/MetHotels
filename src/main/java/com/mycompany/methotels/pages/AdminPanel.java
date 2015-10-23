@@ -51,7 +51,7 @@ public class AdminPanel {
     
     @CommitAfter
     Object onSuccessFromSoba(){
-        sobaDao.dodajSobu(soba);
+        sobaDao.dodajIliIzmeniSobu(soba);
         return this;
     }
     

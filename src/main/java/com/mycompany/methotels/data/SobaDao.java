@@ -16,6 +16,7 @@ import java.util.List;
 public interface SobaDao {
     public List<Soba> getListaSoba();
     public Soba getSobaById(Integer id);
-    public void dodajSobu(Soba soba);
+    public void dodajIliIzmeniSobu(Soba soba);
     public void obrisiSobu(Integer id);
+    public List<Soba> getListaSobaPoImenu(String ime);
 }

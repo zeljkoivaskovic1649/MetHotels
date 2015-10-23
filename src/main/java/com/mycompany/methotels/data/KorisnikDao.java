@@ -20,4 +20,7 @@ public interface KorisnikDao {
     public Korisnik registrujKorisnika(Korisnik korisnik);
     public Korisnik loginKorisnika(String username, String password);;
     public boolean validanEmail(String email);
+    public List<Korisnik> getKorisnikByIme(String ime);
+    public abstract int allActiveSizekorisnici();
+    public abstract List<Korisnik> loadActiveFromTo(int from);
 }

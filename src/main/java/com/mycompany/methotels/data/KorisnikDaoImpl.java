@@ -9,7 +9,9 @@ package com.mycompany.methotels.data;
 import com.mycompany.methotels.entities.Korisnik;
 import java.util.List;
 import org.apache.tapestry5.ioc.annotations.Inject;
+import org.hibernate.Criteria;
 import org.hibernate.Session;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 
@@ -60,5 +62,24 @@ public class KorisnikDaoImpl implements KorisnikDao{
     public boolean validanEmail(String email) {
         Long rezultati = (Long)session.createCriteria(Korisnik.class).add(Restrictions.eq("email", email)).setProjection(Projections.rowCount()).uniqueResult();
         return (rezultati==0) ? false : true;
+    }
+    
+    @Override
+    public List<Korisnik> getKorisnikByIme(String ime) {
+        return session.createCriteria(Korisnik.class).add(Restrictions.like("ime", ime + "%")).list();
+    }
+    
+    @Override
+    public int allActiveSizekorisnici() {
+        Long l = (Long) session.createCriteria(Korisnik.class).setProjection(Projections.rowCount()).uniqueResult();
+        return l.intValue();
+    }
+
+    @Override
+    public List<Korisnik> loadActiveFromTo(int from) {
+        int page = (from - 1) * 20;
+        List<Korisnik> korisnici = session.createCriteria(Korisnik.class).setFirstResult(page).setMaxResults(20)
+                .addOrder(Order.asc("id")).setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).list();
+        return korisnici;
     }
 }

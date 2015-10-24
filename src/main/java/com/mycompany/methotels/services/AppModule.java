@@ -11,6 +11,8 @@ import com.mycompany.methotels.rest.KorisniciWebServisImpl;
 import com.mycompany.methotels.rest.SobeWebServis;
 import com.mycompany.methotels.rest.SobeWebServisImpl;
 import java.io.IOException;
+import org.apache.shiro.realm.AuthorizingRealm;
+import org.apache.shiro.realm.Realm;
 
 import org.apache.tapestry5.*;
 import org.apache.tapestry5.hibernate.HibernateTransactionAdvisor;
@@ -20,6 +22,7 @@ import org.apache.tapestry5.ioc.MethodAdviceReceiver;
 import org.apache.tapestry5.ioc.OrderedConfiguration;
 import org.apache.tapestry5.ioc.ServiceBinder;
 import org.apache.tapestry5.ioc.annotations.Contribute;
+import org.apache.tapestry5.ioc.annotations.InjectService;
 import org.apache.tapestry5.ioc.annotations.Local;
 import org.apache.tapestry5.ioc.annotations.Match;
 import org.apache.tapestry5.ioc.services.ApplicationDefaults;
@@ -49,6 +52,7 @@ public class AppModule
         binder.bind(GenericDao.class, GenericDaoImpl.class);
         binder.bind(SobeWebServis.class, SobeWebServisImpl.class);
         binder.bind(KorisniciWebServis.class, KorisniciWebServisImpl.class);
+        binder.bind(AuthorizingRealm.class, UserRealm.class).withId(UserRealm.class.getSimpleName());
     }
     
     @Match("*Sobe*")
@@ -72,6 +76,11 @@ public class AppModule
     
     public void contributeComponentRequestHandler(OrderedConfiguration<ComponentRequestFilter> configuration) {
         configuration.addInstance("PageProtectionFilter", PageProtectionFilter.class);
+    }
+    
+    public static void contributeWebSecurityManager(Configuration<Realm> configuration,
+    @InjectService("UserRealm") AuthorizingRealm userRealm) {
+        configuration.add(userRealm);
     }
 
     public static void contributeFactoryDefaults(

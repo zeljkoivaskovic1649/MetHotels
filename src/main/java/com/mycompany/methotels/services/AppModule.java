@@ -6,14 +6,22 @@ import com.mycompany.methotels.data.KorisnikDao;
 import com.mycompany.methotels.data.KorisnikDaoImpl;
 import com.mycompany.methotels.data.SobaDao;
 import com.mycompany.methotels.data.SobaDaoImpl;
+import com.mycompany.methotels.rest.KorisniciWebServis;
+import com.mycompany.methotels.rest.KorisniciWebServisImpl;
+import com.mycompany.methotels.rest.SobeWebServis;
+import com.mycompany.methotels.rest.SobeWebServisImpl;
 import java.io.IOException;
 
 import org.apache.tapestry5.*;
+import org.apache.tapestry5.hibernate.HibernateTransactionAdvisor;
+import org.apache.tapestry5.ioc.Configuration;
 import org.apache.tapestry5.ioc.MappedConfiguration;
+import org.apache.tapestry5.ioc.MethodAdviceReceiver;
 import org.apache.tapestry5.ioc.OrderedConfiguration;
 import org.apache.tapestry5.ioc.ServiceBinder;
 import org.apache.tapestry5.ioc.annotations.Contribute;
 import org.apache.tapestry5.ioc.annotations.Local;
+import org.apache.tapestry5.ioc.annotations.Match;
 import org.apache.tapestry5.ioc.services.ApplicationDefaults;
 import org.apache.tapestry5.ioc.services.SymbolProvider;
 import org.apache.tapestry5.services.*;
@@ -39,6 +47,27 @@ public class AppModule
         binder.bind(SobaDao.class, SobaDaoImpl.class);
         binder.bind(KorisnikDao.class, KorisnikDaoImpl.class);
         binder.bind(GenericDao.class, GenericDaoImpl.class);
+        binder.bind(SobeWebServis.class, SobeWebServisImpl.class);
+        binder.bind(KorisniciWebServis.class, KorisniciWebServisImpl.class);
+    }
+    
+    @Match("*Sobe*")
+    public static void adviseTransactionallySobe(
+    HibernateTransactionAdvisor advisor, MethodAdviceReceiver receiver) {
+        advisor.addTransactionCommitAdvice(receiver);
+    }
+    
+    @Match("*Korisnici*")
+    public static void adviseTransactionallyKorisnici(
+    HibernateTransactionAdvisor advisor, MethodAdviceReceiver receiver) {
+        advisor.addTransactionCommitAdvice(receiver);
+    }
+    
+    @Contribute(javax.ws.rs.core.Application.class)
+    public static void configureRestResources(Configuration<Object> singletons,
+    SobeWebServis sobeWeb, KorisniciWebServis korisniciWeb) {
+        singletons.add(sobeWeb);
+        singletons.add(korisniciWeb);
     }
     
     public void contributeComponentRequestHandler(OrderedConfiguration<ComponentRequestFilter> configuration) {

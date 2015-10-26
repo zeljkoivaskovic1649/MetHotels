@@ -12,6 +12,7 @@ import com.mycompany.methotels.entities.AbstractEntity;
 import java.util.List;
 import org.apache.tapestry5.ComponentResources;
 import org.apache.tapestry5.PropertyConduit;
+import org.apache.tapestry5.annotations.PageLoaded;
 import org.apache.tapestry5.annotations.Persist;
 import org.apache.tapestry5.annotations.Property;
 import org.apache.tapestry5.beaneditor.BeanModel;
@@ -47,16 +48,19 @@ public class GenericEditor<T extends AbstractEntity> {
         klasa = conduit1.getPropertyType();
     }
     
+    @PageLoaded
     public List<T> getGrid() {
         List<T> temp = genericDao.loadAllActive(klasa);
         return temp;
     }
     
+    @PageLoaded
     public BeanModel<T> getFormModel() {
         return beanModelSource.createEditModel(klasa,
         componentResources.getMessages()).exclude("id");
     }
     
+    @PageLoaded
     public BeanModel<T> getGridModel() {
         return beanModelSource.createDisplayModel(klasa,
         componentResources.getMessages()).exclude("id");

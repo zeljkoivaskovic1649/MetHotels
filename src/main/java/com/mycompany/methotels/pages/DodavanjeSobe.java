@@ -6,12 +6,12 @@
 package com.mycompany.methotels.pages;
 
 import com.mycompany.methotels.components.GenericEditor;
-import com.mycompany.methotels.entities.Korisnik;
+import com.mycompany.methotels.entities.Soba;
 
 /**
  *
  * @author Zeljko
  */
-public class DodavanjeKorisnika extends GenericEditor<Korisnik>{
+public class DodavanjeSobe extends GenericEditor<Soba>{
     
 }

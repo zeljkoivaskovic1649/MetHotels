@@ -1,5 +1,11 @@
 <html t:type="layout" title="Dodavanje Soba"
     xmlns:t="http://tapestry.apache.org/schema/tapestry_5_3.xsd"
       xmlns:p="tapestry:parameter">
-    <t:beaneditform t:id="form" object="korisnik" submitlabel="Login" exclude="id,ime,prezime,email.adresa,rola" />
+    <t:beaneditform t:id="form" object="korisnik" submitlabel="Login" exclude="id,rola, facebookId" >
+        <p:sifra>
+            <t:label for="sifra"/>
+            <t:passwordfield t:id="sifra" value="userLogin.sifra"/>
+        </p:sifra>
+    </t:beaneditform>
+    <a href="${facebookAuthentificationLink}"><input type="button" class="input2" value="Login with facebook"/></a>
 </html>

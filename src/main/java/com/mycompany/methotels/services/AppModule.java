@@ -53,6 +53,7 @@ public class AppModule
         binder.bind(SobeWebServis.class, SobeWebServisImpl.class);
         binder.bind(KorisniciWebServis.class, KorisniciWebServisImpl.class);
         binder.bind(AuthorizingRealm.class, UserRealm.class).withId(UserRealm.class.getSimpleName());
+        binder.bind(FacebookService.class);
     }
     
     @Match("*Sobe*")

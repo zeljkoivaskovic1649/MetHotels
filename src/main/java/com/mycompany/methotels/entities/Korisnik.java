@@ -91,6 +91,8 @@ public class Korisnik extends AbstractEntity {
     @Size(min = 1, max = 50)
     @Column(name = "email")
     private String email;
+    @Column(name = "FACEBOOK_ID")
+    private String facebookId;
 
     public Korisnik() {
     }
@@ -110,6 +112,13 @@ public class Korisnik extends AbstractEntity {
         this.password = password;
         this.rola = rola;
         this.email = email;
+    }
+    
+    public Korisnik(String email, String password, String rola, String facebookId) {
+        this.email = email;
+        this.password = password;
+        this.rola = rola;
+        this.facebookId = facebookId;
     }
 
     public Integer getId() {
@@ -190,6 +199,14 @@ public class Korisnik extends AbstractEntity {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+    
+    public String getFacebookId() {
+        return facebookId;
+    }
+    
+    public void setFacebookId(String facebookId) {
+        this.facebookId = facebookId;
     }
 
     @Override
